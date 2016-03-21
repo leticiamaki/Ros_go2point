@@ -195,3 +195,6 @@ target_link_libraries(quart2yaw ${catkin_LIBRARIES})
 
 add_executable(position_yaw src/posição+yaw.cpp)
 target_link_libraries(position_yaw ${catkin_LIBRARIES})
+
+add_executable(exec3 src/anda_depois_vira.cpp)
+target_link_libraries(exec3 ${catkin_LIBRARIES})
