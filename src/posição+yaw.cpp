@@ -24,32 +24,27 @@ void Callback(const nav_msgs::OdometryConstPtr &msg){
     deltaTeta = teta - yaw;
     ROS_INFO("DELTA TETA: %F", deltaTeta);
     
-    if (d > 0.1){     // ainda não chegou
-        if(deltaTeta > M_PI){
-            v = -1;   // alinhado no angulo
-            w = 0;
-        }
-        if(deltaTeta < M_PI){
-            v = 1;
-            
+    if (d > 0.2){     // ainda não chegou
+        if(deltaTeta < -0.055 || deltaTeta > 0.055){
+            v = 0;   
+            w = 0.8 * deltaTeta;
         }
         else{
-            v = 0;  // não alinhado no angulo
-            w = (0.1);
+            v = 1;  // alinhado no angulo
+            w = 0;
         }
     }
     else{   // encontrou a posição de chegada
         v = 0;
         w = 0;
-    }
+    } 
     
     //w = k * deltaTeta;
     //  v = w * r;
     
     twist_msg.linear.x = v;
     twist_msg.angular.z = w; 
-    pub.publish(twist_msg);    
-    
+    pub.publish(twist_msg);        
 }
 
 int main(int argc, char **argv){
